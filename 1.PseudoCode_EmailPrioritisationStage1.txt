@@ -1,0 +1,153 @@
+/* Note: If you are reading this in SublimeText or a code editor, set the sytax highlighting to Javascript, to get a more readable document. */
+
+====================
+PREAMBLE
+====================
+
+/*
+This document is part of a larger body of work being done to improve the state of fuzzy logic algorithms that have to do with sorting and prioritizing email. This is a pseudocode analysis that will be later published in several different codebases to be included into email programs and any other natural language processing software that requires a prioritising and sorting engine.
+
+This pseudocode analysis of sorting algoritms is distrubuted under the GPL version 3. Please see the license conditions here:
+http://www.opensource.org/licenses/gpl-3.0.html
+
+This work is orginally conducted by Kosala Ubayasekara (kosalau@gmail.com) (kosala@cozala.com) under the reserch and development programme of Cozala LTD, registered in the United Kingdom. See our website www.cozala.com for details. Contributions and thinking welcome from third parties according to the guidelines of the license above.
+*/
+
+====================
+PROBLEM DEFINITION
+====================
+
+/*
+The sheer volume of email passed into corporate email servers is staggering. Current efforts by email providers and client developers have centered around the concept of prioritisation and intelligent sorting. This is only half the solution but even that half requires considerable improvement. The current efforts are largely based around behaviour pattern matching over time. This analysis focuses on natural language based patterns coupled with traditional user behavious in corporate situations that regularly occur, as an addition to pattern analysis approach.
+*/
+
+====================
+FUZZY LOGIC ANALYSIS v0.1
+====================
+
+/* This is a helper function for the rest of the logic */
+
+Function CheckHowMany(Sender as Person, DateRange as Day | Week | Month) {
+	Returns the amount of times Sender has emailed the user in the last DateRange as a total
+}
+
+/* When the email first arrives in the my inbox box */
+
+Function SenderExists {		
+	Select Case DoesTheSenderExistInMyAddressBook
+		Case "yes"
+			Run DomainMatch
+		Case "no"
+			Define Sender as PotentialSpam
+			Run NewUserCategorisation (Sender, EmailSubject, EmailBody)
+	End Select
+}
+
+/* The logic to define a new user */
+
+Function NewUserCategorisation (Sender as Person, EmailSubject as String, EmailBody as String)
+
+/* The primary matching system is based on domains, with the pretext that people from your own corporate domain make for a higher priority read */
+
+Function DomainMatch(Sender as Person) {
+	var MyDomain = User.Domain
+	var SenderDomain = Sender.Domain
+	var SameDomain as Boolean
+
+	If MyDomain = SenderDomain then (
+			SameDomain = True
+		else (
+			SameDomain = False
+		)	
+	)
+
+	Select case Sender.Importance
+		case "Important"
+			if SameDomain = True (
+				Do Nothing
+			)
+			else (
+				Define Sender as PerhapsImportant
+			)
+		case "PerhapsImportant"
+			Do Nothing
+		case "UnImportant"
+			Do Nothing
+		case else
+			if SameDomain = True (
+				Define Sender as PerhapsImportant
+			)
+			else (
+				Define Sender as UnImportant
+			) 
+	end Select
+}
+
+/* The secondary behaviour driven characterisation is defined by previous patterns. This characterization is used because if people work together on a project, they will most likely be emailing each other frequently, and in the event that occurs, responses to these people should therefore be a priority for the user. */
+
+Function PreviousHistory(Sender as Person) {
+	if CheckHowMany(Day) >= 1 ( 
+		if CheckHowMany(Week) >= 4 then (
+			Define Sender as Important
+			else if result of that is >= 2 then (
+				Define Sender as PerhapsImportant
+			)
+			else (
+				Define Sender as UnImportant
+			)
+		)
+		else (
+			if CheckHowMany(Month) >= 10 per month then (
+				Define Sender as Important
+				else (
+					if CheckHowMany(Week) >= 4 then (
+						Define Sender as Important
+						else if CheckHowMany(Week) >= 2 then (
+							Define Sender as PerhapsImportant
+						)
+						else (
+							Define Sender as UnImportant
+						)
+					)
+				)
+			)
+		)
+	)
+	Run KeywordMatch(Sender)
+}
+
+/* The tertiary matching criteria is based around keywords that often occur in a corporate environment */
+
+Function KeywordMatch(Sender as Person, EmailSubject as String, EmailBody as String) {
+	Array keywords[] = "project,meeting,call,meet,room"
+	Array keywordsMisspelled[] = "projet,poject,meeeting,meetin,rom"
+
+	For Each item in keywords
+		If item exists in EmailSubject or EmailBody (
+			Select case Sender.Importance
+				case "Important"
+					Do Nothing
+				case "PerhapsImportant"
+					Define Sender as Important
+				case "UnImportant"
+					Define Sender as PerhapsImportant
+			end Select
+		)
+	Loop
+
+	For Each item in keywordsMisspelled
+		If item exists in EmailSubject or EmailBody (
+			Select case Sender.Importance
+				case "Important"
+					Do Nothing
+				case "PerhapsImportant"
+					Define Sender as Important
+				case "UnImportant"
+					Define Sender as PerhapsImportant
+			end Select
+		)
+	Loop
+
+	Run 
+}
+
