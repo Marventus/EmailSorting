@@ -36,7 +36,7 @@ Function CheckHowMany(Sender as Person, DateRange as Day | Week | Month) {
 Function SenderExists {		
 	Select Case DoesTheSenderExistInMyAddressBook
 		Case "yes"
-			Run DomainMatch
+			Run DomainMatch (Sender as Person)
 		Case "no"
 			Define Sender as PotentialSpam
 			Run NewUserCategorisation (Sender, EmailSubject, EmailBody)
@@ -45,7 +45,10 @@ Function SenderExists {
 
 /* The logic to define a new user */
 
-Function NewUserCategorisation (Sender as Person, EmailSubject as String, EmailBody as String)
+Function NewUserCategorisation (Sender as Person, EmailSubject as String, EmailBody as String) {
+	Run DomainMatch (Sender as Person)
+
+}
 
 /* The primary matching system is based on domains, with the pretext that people from your own corporate domain make for a higher priority read */
 
@@ -113,7 +116,6 @@ Function PreviousHistory(Sender as Person) {
 			)
 		)
 	)
-	Run KeywordMatch(Sender)
 }
 
 /* The tertiary matching criteria is based around keywords that often occur in a corporate environment */
