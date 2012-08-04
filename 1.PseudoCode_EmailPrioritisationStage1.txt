@@ -22,7 +22,7 @@ The sheer volume of email passed into corporate email servers is staggering. Cur
 */
 
 ====================
-FUZZY LOGIC ANALYSIS BEHAVIOUR BASED PRIORITIZATION v0.1
+BEHAVIOUR BASED PRIORITIZATION v0.1
 ====================
 
 /* This is a helper function for the rest of the logic */
