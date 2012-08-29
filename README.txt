@@ -1,8 +1,10 @@
+/* Note: If you are reading this in SublimeText or a code editor, set the sytax highlighting to Javascript, to get a more readable document. */
+
 ====================
 CURRENT STATE OVERALL
 ====================
 
-Current state of this project: ALPHA.
+Current state of this project: BETA.
 
 ====================
 PROBLEM DEFINITION
@@ -16,13 +18,13 @@ Many email programs allow manual filering and some attempt automated filtering a
 WHAT THIS IS
 ====================
 
-This document is part of a larger body of work being done to improve the state of fuzzy logic algorithms that have to do with sorting and prioritizing email. This is a pseudocode analysis that will be later published in several different codebases to be included into email programs and any other natural language processing software that requires a prioritising and sorting engine for human to human communication.
+This document is part of a larger body of work being done to improve the state of algorithms that have to do with sorting and prioritizing email. This is a pseudocode analysis that will be later published in several different codebases to be included into email programs and any other natural language processing software that requires a prioritising and sorting engine for human to human communication.
 
 The steps in this research project are as follows:
 
-[Step 1]: Create algorithms for behavior based sorting. State: ALPHA.
-[Step 2]: Create algorithms for natural language based sorting. State: ALPHA.
-[Step 3]: Create fuzzy logic analyses for software self learning on variations of a persons long term email behaviour. State: NOT YET BEGUN.
+[Step 1]: Create algorithms for behavior based sorting. State: BETA.
+[Step 2]: Create algorithms for natural language based sorting. State: BETA.
+[Step 3]: Create algorithms for software self learning on variations of a persons long term email behaviour. State: NOT YET BEGUN.
 [Step 4]: Create cloud repository API for storing anonymous behaviour patterns for sharing across multiple platforms and software suites. State: NOT YET BEGUN.
 
 ====================
